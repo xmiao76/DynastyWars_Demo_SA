@@ -1,0 +1,14 @@
+{
+  "provider": "Grok subscription",
+  "model": "grok-imagine-video-1.5",
+  "parameters": {
+    "prompt": "Same spearman soldier, locked camera, wide shot, side view, one clear spear thrust forward and slightly upward diagonally: wind-up pulling spear back, fast lunge thrust, recovery to ready stance. In place, constant scale, no camera motion, no zoom, flat magenta background, generous empty magenta margin on all sides, spear tip and butt always at least 10 percent inside the frame, entire spear always fully visible, minimal motion blur.",
+    "duration": 3,
+    "aspect_ratio": "1:1",
+    "resolution": "480p"
+  },
+  "referenceImage": "C:\\Users\\qiyu0\\.dsh\\state\\superagent\\work\\dynasty-wars-demo-2ba50ba7f107\\assets-source\\soldier\\master-attack-framing.png",
+  "path": "C:\\Users\\qiyu0\\.dsh\\state\\superagent\\work\\dynasty-wars-demo-2ba50ba7f107\\assets-source\\soldier\\video-attack2\\video-2026-11-17T08-26-15-443Z-j94jfe.mp4",
+  "duration": 3,
+  "createdAt": "2026-11-17T08:26:15.445Z"
+}

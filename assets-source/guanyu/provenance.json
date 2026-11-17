@@ -1,0 +1,192 @@
+{
+ "character": "Guan Yu (green robe, gold dragon armor, long black beard, guandao), side view facing right",
+ "skillNote": "Requested skill 'dsh-superagent-game-asset-workflow' was not available in this session (skill tool returned unknown); the task instructions were followed directly.",
+ "image": {
+  "provider": "ChatGPT subscription",
+  "model": "gpt-image-2",
+  "masterV1": {
+   "file": "master-v1.png",
+   "source": "C:/GitHub/temp/superagent-game-preflight-20261117/images/image-2026-11-17T07-30-31-709Z-6iah0v-0.png",
+   "note": "Pre-existing master, copied unchanged (immutable). Weapon upright, tight top framing."
+  },
+  "masterV2": {
+   "file": "master.png",
+   "rawGeneratedFile": "master-v2-raw.png (1312x1199, re-saved via PIL; original generation saved by the tool as image-2026-11-17T08-24-20-773Z-g3l608-0.png)",
+   "attempts": 1,
+   "method": "image_generate reference edit using master-v1.png as referenceImages, size 1024x1024 requested (tool returned 1312x1199). Then padded with flat #ff00ff to 1312x1312 square (= master.png) so the 1:1 video would not crop the weapon.",
+   "prompt": "Edit this exact character into a game sprite master: keep the SAME character identity, face, long black beard, green headcloth, green robe with gold dragon embroidery, ornate gold dragon scale armor, and the same ornate guandao polearm with curved blade and gold dragon detail. Change ONLY the pose and framing: strict side view facing right, relaxed ready combat stance, feet slightly apart planted on the ground, both hands holding the guandao diagonally across the body with the blade raised up and forward to the right, shaft angled down-back to the left. The whole character including the full weapon occupies only about 65% of the frame height, centered, with GENEROUS empty margin on ALL sides, especially in front (right) and top for weapon swings — nothing touches or is cropped by any edge. Flat pure solid magenta #ff00ff background, no shadow, no ground, no text, no scenery. Detailed painted illustration style, not pixel art, clean edges.",
+   "assessment": "Identity, face, costume and weapon preserved very well on attempt 1; diagonal ready stance with generous margins as requested."
+  }
+ },
+ "video": {
+  "provider": "Grok subscription",
+  "model": "grok-imagine-video-1.5",
+  "helper": "node C:/Users/qiyu0/AppData/Local/DeepSeekSuperagent/game-tools/video-from-file.mjs <video-request-*.json>",
+  "commonSettings": {
+   "imagePath": "assets-source/guanyu/master.png",
+   "aspect_ratio": "1:1",
+   "resolution": "480p"
+  },
+  "actions": {
+   "idle": {
+    "attempts": 1,
+    "usedAttempt": 1,
+    "durationSec": 2,
+    "requestFile": "video-request-idle.json",
+    "videoFile": "videos/idle-a1.mp4 (tool output name: video-2026-11-17T08-25-08-025Z-oouygm.mp4)",
+    "prompt": "Same warrior, locked camera, full body idle breathing in place, subtle robe/beard sway, weapon held ready, no camera motion, no walking, flat magenta background, entire weapon and body always fully visible with margin."
+   },
+   "walk": {
+    "attempts": 1,
+    "usedAttempt": 1,
+    "durationSec": 3,
+    "requestFile": "video-request-walk.json",
+    "videoFile": "videos/walk-a1.mp4 (tool output name: video-2026-11-17T08-25-32-778Z-8nyzam.mp4)",
+    "prompt": "Same warrior, locked camera, walking in place toward the right side-view, steady marching gait, full body, constant scale, no camera motion, flat magenta background, entire weapon and body always fully visible with margin."
+   },
+   "attack": {
+    "attempts": 3,
+    "usedAttempt": 3,
+    "durationSec": 3,
+    "attemptsDetail": [
+     {
+      "attempt": 1,
+      "requestFile": "video-request-attack.json",
+      "videoFile": "videos/attack-a1.mp4 (tool output name: video-2026-11-17T08-25-57-983Z-9i95qh.mp4)",
+      "prompt": "Same warrior, locked camera, one powerful horizontal guandao slash to the right: clear wind-up raising the blade, fast horizontal strike, then recovery back to ready stance. Side view, in place, constant scale, no camera motion, flat magenta background, entire weapon always fully visible, minimal motion blur.",
+      "verdict": "REJECTED: character rotates to front-facing during the strike; blade thins to a spear during wind-up and touches the top edge (alpha bbox y0=0 in some frames)."
+     },
+     {
+      "attempt": 2,
+      "requestFile": "video-request-attack-a2.json",
+      "videoFile": "videos/attack-a2.mp4 (tool output name: video-2026-11-17T08-27-39-766Z-d09xju.mp4)",
+      "prompt": "Same warrior in STRICT side profile facing right for the ENTIRE clip — head, torso and feet stay in side view, he NEVER turns toward the camera, never faces the viewer. Locked camera, in place, constant scale. He performs ONE guandao slash: wind-up pulling the blade up and back over his shoulder, then a fast horizontal chop forward to the right in the side plane, blade sweeping through the right side of the frame, then recovery back to the ready stance. The large curved blade stays large, rigid and clearly visible at all times. No camera motion, flat magenta background, entire weapon and body always fully visible with margin, minimal motion blur.",
+      "verdict": "REJECTED: blade cropped at top during overhead wind-up (y0=0, frames 10-15) and morphs into a thin spear through the strike (frames 17-21)."
+     },
+     {
+      "attempt": 3,
+      "requestFile": "video-request-attack-a3.json",
+      "videoFile": "videos/attack-a3.mp4 (tool output name: video-2026-11-17T08-28-21-606Z-nxannn.mp4)",
+      "prompt": "Same warrior in strict side profile facing right the whole time, locked camera, in place, constant scale, flat magenta background. He performs ONE quick diagonal guandao chop: brief wind-up tilting the blade slightly back at shoulder height, then chops diagonally DOWN and forward to the right so the blade ends low in front of him at knee height, then lifts the weapon back to the ready stance. The blade NEVER goes above his head and stays in the middle band of the frame with wide margin from all edges. The large curved blade stays large, rigid and clearly visible in every frame. He never turns toward the camera. Minimal motion blur.",
+      "verdict": "USED: side profile kept, blade large/rigid and fully in frame in all frames (union bbox x 22..504, y 30..472 of 544). Diagonal down-chop instead of overhead slash. Strike transition is fast (frames 11->13) and he holds the low pose a long time in the source clip; frame selection compresses the hold."
+     }
+    ]
+   }
+  }
+ },
+ "processing": {
+  "pipeline": "C:/Users/qiyu0/AppData/Local/DeepSeekSuperagent/game-tools/asset-pipeline.py with game-tools .venv python (PIL 13.0.0, numpy 2.5.5)",
+  "commandsPerAction": [
+   "asset-pipeline.py extract '<video>.mp4' 'frames-<action>-a<N>-raw' --fps 12   (fresh dir each time; 544x544 PNGs)",
+   "asset-pipeline.py remove-bg 'frames-<action>-a<N>-raw' 'frames-<action>-a<N>-keyed' --method chroma --color ff00ff"
+  ],
+  "extractedCounts": {
+   "idle-a1": 25,
+   "walk-a1": 37,
+   "attack-a1": 37,
+   "attack-a2": 37,
+   "attack-a3": 37
+  },
+  "inspectionSheets": [
+   "sheet-idle-a1.png",
+   "sheet-walk-a1.png",
+   "sheet-attack-a1.png",
+   "sheet-attack-a2.png",
+   "sheet-attack-a3.png",
+   "sheet-attack-a3-strike.png"
+  ],
+  "contactSheetScript": "make-contact-sheet.py"
+ },
+ "frameSelection": {
+  "note": "1-based source frame numbers (frame-XXXX.png) from the keyed dirs. All three videos share an identical first frame / coordinate system.",
+  "idle": {
+   "dir": "frames-idle-a1-keyed",
+   "frames": [
+    3,
+    6,
+    9,
+    12,
+    15,
+    12,
+    9,
+    6
+   ],
+   "count": 8,
+   "rationale": "Source sway is a one-way drift (alpha IoU vs frame 3 declines monotonically 1.0->0.84, no return), so the loop is built ping-pong for a seamless breathing cycle."
+  },
+  "walk": {
+   "dir": "frames-walk-a1-keyed",
+   "frames": [
+    6,
+    8,
+    9,
+    11,
+    12,
+    14,
+    15,
+    17
+   ],
+   "count": 8,
+   "rationale": "Alpha-IoU periodicity shows a ~12-frame gait cycle; frames 6..17 sampled evenly to 8."
+  },
+  "attack": {
+   "dir": "frames-attack-a3-keyed",
+   "frames": [
+    1,
+    4,
+    8,
+    10,
+    12,
+    14,
+    33,
+    35,
+    37
+   ],
+   "count": 9,
+   "rationale": "ready, wind-up, wind-up peak, chop start, chop lands, full extension, recovery x2, back to ready. The long low-pose hold (source frames 15-31) is compressed out."
+  }
+ },
+ "normalization": {
+  "script": "normalize.py",
+  "canvas": [
+   512,
+   512
+  ],
+  "groundY": 472,
+  "sourceFrameSize": [
+   544,
+   544
+  ],
+  "sourceGroundY": 472,
+  "scale": 1.02,
+  "scaleRationale": "Idle head-to-feet measures ~310px in source; 380px on canvas would need s=1.23, but the extended attack pose spans 482px wide in source (would become 591px > 512 canvas) and the wind-up reaches 442px above the feet (would become 542 > 472 available above ground). Scale was therefore capped at s=1.02 by the nothing-cropped constraint: character ~316px tall on canvas, widest frame ~492px (~10px side margins), ~21px top margin at wind-up peak. This deviates from the ~380px guideline; the game can display-scale the sprite as needed since groundY is exact.",
+  "translation": "Single global dx centering the union of all selected frames (source x 22..504) on canvas x=256; dy maps source ground 472 -> canvas 472. No per-frame cropping or recentering.",
+  "perActionOffsetsPx": {
+   "idle": [
+    0,
+    -2
+   ],
+   "walk": [
+    -6,
+    0
+   ],
+   "attack": [
+    0,
+    0
+   ]
+  },
+  "perActionOffsetRationale": "Measured after first pass: idle soles sat 2px below the ground line; walk torso centroid sat ~6px right of idle (walk clip drifts right after its identical first frame). After correction, planted-foot bottom = y 472/473 in all actions.",
+  "despill": "Strongly magenta-dominant pixels (min(R,B)-G > 40) within 2px of the silhouette edge are dropped; all remaining pixels have magenta dominance neutralized (R and B reduced by min(R,B)-G where positive). Residual magenta-dominant visible pixels in final frames: 1-3 per frame.",
+  "outputs": "public/assets/frames/guanyu/{idle,walk,attack}_<i>.png (512x512 RGBA) + manifest.json; combined verification sheet at assets-source/guanyu/contact-sheet.png (rows per action over dark background, red ground line at y=472)."
+ },
+ "knownDefects": [
+  "Scale compromise: character is ~316px tall on the 512 canvas instead of ~380px (see scaleRationale) — required so the fully extended guandao fits uncropped at one shared scale.",
+  "Attack blade tint shifts greenish-gold and the blade reads flatter/more elongated in the strike-end frames (attack_4, attack_5) compared with the silver blade in idle/walk — a video-generation artifact; blade never disappears or crops.",
+  "Attack is a diagonal down-chop ending low (blade at knee height), not a horizontal slash, and the strike itself is fast (2 source frames). Body turns slightly 3/4 toward camera in the follow-through frames (attack_5..7) but head stays in profile.",
+  "Walk: robe hem covers the legs heavily, so the gait reads mostly through hem sway and the visible swinging boot. Walk passing poses (walk_0..2) sit ~5px above the ground line (both feet mid-step in the source video) — natural bob, preserved.",
+  "Idle loop is ping-pong (frames repeat in reverse) because the source clip's sway never returns to its start pose; motion is subtle breathing only.",
+  "Minor cross-action horizontal wobble remains (torso centroid within ~+/-6px) inherent to the generated videos.",
+  "Source resolution is 480p (544x544 frames), so final sprites are slightly soft when displayed larger than ~350px."
+ ],
+ "integrationNote": "Intermediate sheet-*.png / frames-* dirs were trimmed or gitignored before commit (regenerable from kept videos); final contact-sheet.png retained. Duplicate timestamped MP4 copies identical to named files were removed (guanyu), .generation.json sidecars kept."
+}

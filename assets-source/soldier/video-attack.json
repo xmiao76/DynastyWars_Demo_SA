@@ -1,0 +1,8 @@
+{
+  "outputDir": "C:/Users/qiyu0/.dsh/state/superagent/work/dynasty-wars-demo-2ba50ba7f107/assets-source/soldier/video-attack",
+  "resolution": "480p",
+  "prompt": "Same spearman soldier, locked camera, side view, one clear spear thrust forward: wind-up pulling spear back, fast lunge thrust, recovery to ready stance. In place, constant scale, no camera motion, flat magenta background, entire spear always fully visible, minimal motion blur.",
+  "duration": 3,
+  "aspect_ratio": "1:1",
+  "imagePath": "C:/Users/qiyu0/.dsh/state/superagent/work/dynasty-wars-demo-2ba50ba7f107/assets-source/soldier/master.png"
+}

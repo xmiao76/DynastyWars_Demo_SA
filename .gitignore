@@ -1,0 +1,11 @@
+node_modules/
+dist/
+verification/
+verification-smoke/
+*.log
+.DS_Store
+# Asset-pipeline intermediates (regenerable from the kept master videos
+# with the commands recorded in each assets-source/provenance.json):
+assets-source/*/frames-*/
+assets-source/*/video-*/frames*/
+assets-source/*/video-*/*-frames*/

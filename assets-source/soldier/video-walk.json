@@ -1,0 +1,8 @@
+{
+  "outputDir": "C:/Users/qiyu0/.dsh/state/superagent/work/dynasty-wars-demo-2ba50ba7f107/assets-source/soldier/video-walk",
+  "resolution": "480p",
+  "prompt": "Same spearman soldier, locked camera, walking in place, side view, steady gait, spear carried at ready, constant scale, no camera motion, flat magenta background, entire spear and body always fully visible with margin.",
+  "duration": 3,
+  "aspect_ratio": "1:1",
+  "imagePath": "C:/Users/qiyu0/.dsh/state/superagent/work/dynasty-wars-demo-2ba50ba7f107/assets-source/soldier/master.png"
+}
