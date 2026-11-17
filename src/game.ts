@@ -713,7 +713,17 @@ export class GameScene extends Phaser.Scene {
       z.cleared = true;
       this.activeZone = null;
       this.cameras.main.setBounds(0, 0, WORLD_W, VIEW_H);
-      if (!z.isBoss) this.goArrow.setVisible(true);
+      if (!z.isBoss) {
+        this.goArrow.setVisible(true);
+        // Field rations after each cleared wave (a nod to the arcade
+        // original's food pickups): small heal, keeps a full run fair.
+        if (this.player.hp > 0 && this.player.hp < this.player.maxHp) {
+          this.player.hp = Math.min(this.player.maxHp, this.player.hp + 25);
+          this.showBanner('Field rations / 军粮  +25 HP', 1300);
+          const label = this.add.text(this.player.x, this.player.gy - 190, '+25', { fontSize: '20px', color: '#8aff9a', fontFamily: 'Georgia, serif', stroke: '#000', strokeThickness: 3 }).setOrigin(0.5).setDepth(960);
+          this.tweens.add({ targets: label, y: this.player.gy - 230, alpha: 0, duration: 800, onComplete: () => label.destroy() });
+        }
+      }
       this.time.delayedCall(1600, () => this.goArrow.setVisible(false));
     }
     if (this.boss && this.boss.hp > 0 && this.boss.hp <= this.boss.maxHp * 0.5 && !this.boss.bossAddsSpawned) {
