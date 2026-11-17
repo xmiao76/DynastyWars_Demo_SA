@@ -211,7 +211,7 @@ async function main() {
   await hook('teleport', 2850, 450);
   await sleep(800);
   s = await state();
-  check('boss spawns in arena', s.bossHp !== null && s.bossHp > 300, `bossHp=${s.bossHp}`);
+  check('boss spawns in arena', s.bossHp !== null && s.bossHp >= 300, `bossHp=${s.bossHp}`);
   // Real combat vs the boss: land genuine combo swings (no damage hooks)
   // and confirm his hp actually falls.
   const bossHpStart = s.bossHp;

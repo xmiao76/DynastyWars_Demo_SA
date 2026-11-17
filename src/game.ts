@@ -58,7 +58,7 @@ const STATS: Record<FighterKind, KindStats> = {
   player: { hp: 100, speed: 230, depthSpeed: 125, damage: 0, reach: 0, windup: 0, recovery: 0, score: 0, canvasDisplayH: 275, char: 'guanyu' },
   spearman: { hp: 32, speed: 95, depthSpeed: 55, damage: 7, reach: 98, windup: 300, recovery: 620, score: 100, canvasDisplayH: 255, char: 'soldier' },
   blader: { hp: 24, speed: 135, depthSpeed: 80, damage: 5, reach: 70, windup: 220, recovery: 480, score: 120, tint: 0xd8a08a, canvasDisplayH: 255, char: 'soldier' },
-  boss: { hp: 340, speed: 70, depthSpeed: 42, damage: 18, reach: 130, windup: 680, recovery: 1150, score: 1000, canvasDisplayH: 345, char: 'boss' },
+  boss: { hp: 320, speed: 70, depthSpeed: 42, damage: 15, reach: 130, windup: 680, recovery: 1150, score: 1000, canvasDisplayH: 345, char: 'boss' },
 };
 
 class Fighter {
