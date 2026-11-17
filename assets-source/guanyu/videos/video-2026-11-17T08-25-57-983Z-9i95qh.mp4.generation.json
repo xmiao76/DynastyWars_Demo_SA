@@ -1,0 +1,14 @@
+{
+  "provider": "Grok subscription",
+  "model": "grok-imagine-video-1.5",
+  "parameters": {
+    "prompt": "Same warrior, locked camera, one powerful horizontal guandao slash to the right: clear wind-up raising the blade, fast horizontal strike, then recovery back to ready stance. Side view, in place, constant scale, no camera motion, flat magenta background, entire weapon always fully visible, minimal motion blur.",
+    "duration": 3,
+    "aspect_ratio": "1:1",
+    "resolution": "480p"
+  },
+  "referenceImage": "C:\\Users\\qiyu0\\.dsh\\state\\superagent\\work\\dynasty-wars-demo-2ba50ba7f107\\assets-source\\guanyu\\master.png",
+  "path": "C:\\Users\\qiyu0\\.dsh\\state\\superagent\\work\\dynasty-wars-demo-2ba50ba7f107\\assets-source\\guanyu\\videos\\video-2026-11-17T08-25-57-983Z-9i95qh.mp4",
+  "duration": 3,
+  "createdAt": "2026-11-17T08:25:57.985Z"
+}

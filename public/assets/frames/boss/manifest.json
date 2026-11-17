@@ -1,0 +1,13 @@
+{
+ "canvas": [
+  640,
+  640
+ ],
+ "groundY": 600,
+ "actions": {
+  "idle": 5,
+  "walk": 8,
+  "attack": 10
+ },
+ "originX": 285
+}

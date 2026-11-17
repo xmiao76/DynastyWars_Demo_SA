@@ -1,0 +1,22 @@
+{
+  "model": "gpt-image-2",
+  "battlefield": {
+    "source": "assets-source/bg/battlefield-source.png",
+    "final": "public/assets/bg/battlefield.jpg",
+    "requestedSize": "1536x1024",
+    "actualSize": [2172, 724],
+    "attempts": 1,
+    "jpgQuality": 85,
+    "prompt": "Side-scrolling beat-em-up stage background, ancient Chinese Three Kingdoms battlefield at golden-hour dusk: layered distant mountains and river haze, war banners and watchtowers mid-distance, an enemy camp palisade, wide flat dirt battlefield occupying the lower third (empty, walkable, evenly lit), painted illustrated style matching detailed game character art, no characters, no text, no UI. Horizon around upper-middle; left and right edges similar brightness so the image can tile horizontally.",
+    "note": "Provider returned a 2172x724 panorama instead of 1536x1024. Kept at returned size (wider is useful for a side-scroller); similar banner/watchtower elements at both edges help horizontal tiling. Walkable dirt occupies roughly the lower 40%."
+  },
+  "camp": {
+    "source": "assets-source/bg/camp-source.png",
+    "final": "public/assets/bg/camp.jpg",
+    "requestedSize": "1536x1024",
+    "actualSize": [1774, 887],
+    "attempts": 1,
+    "jpgQuality": 85,
+    "prompt": "Side-scrolling beat-em-up stage background, ancient Chinese Three Kingdoms battlefield at golden-hour dusk, matching a painted illustrated game style: layered distant mountains and river haze, war banners and watchtowers, and a big wooden enemy camp gate centered-right in a tall log palisade wall with banners above it, wide flat dirt battlefield occupying the lower third (empty, walkable, evenly lit), no characters, no text, no UI. Horizon around upper-middle."
+  }
+}

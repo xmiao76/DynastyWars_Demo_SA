@@ -1,0 +1,14 @@
+{
+  "provider": "Grok subscription",
+  "model": "grok-imagine-video-1.5",
+  "parameters": {
+    "prompt": "Same spearman soldier, locked camera, side view, feet planted in exactly the same spot, body does not travel forward, one compact short spear thrust diagonally up-right at 25 degrees: pull spear back, quick short thrust with both hands staying on the shaft, recover to the exact starting ready stance. Constant scale, no camera motion, no zoom, flat magenta background, spear tip never goes beyond its starting position and always stays well inside the frame, entire spear and body fully visible with margin, minimal motion blur.",
+    "duration": 3,
+    "aspect_ratio": "1:1",
+    "resolution": "480p"
+  },
+  "referenceImage": "C:\\Users\\qiyu0\\.dsh\\state\\superagent\\work\\dynasty-wars-demo-2ba50ba7f107\\assets-source\\soldier\\master.png",
+  "path": "C:\\Users\\qiyu0\\.dsh\\state\\superagent\\work\\dynasty-wars-demo-2ba50ba7f107\\assets-source\\soldier\\video-attack3\\video-2026-11-17T08-27-09-239Z-nsal0o.mp4",
+  "duration": 3,
+  "createdAt": "2026-11-17T08:27:09.242Z"
+}

@@ -1,0 +1,102 @@
+{
+ "character": "boss - hulking fictional Wei champion general, dark iron + crimson armor, horned helmet, thick beard, oversized single-edged broadsword, side view facing right",
+ "master": {
+  "file": "assets-source/boss/master.png",
+  "model": "gpt-image-2",
+  "requestedSize": "1024x1024",
+  "actualSize": [
+   1536,
+   1024
+  ],
+  "attempts": 1,
+  "prompt": "Full-body side-view game sprite master character art, facing RIGHT in strict side profile, of a hulking fictional ancient Chinese Wei enemy general boss from the Three Kingdoms era. Enormously bulky muscular build, much larger and more menacing than a normal soldier, broad shoulders, thick black beard, fierce scowl. Dark black iron heavy plate armor with crimson red trim and crimson sash, spiked pauldrons, horned dark iron helmet with two curved horns, heavy armored boots. He grips an oversized broadsword - one huge single-edged thick cleaver-like blade with short handle - held down at his side in a ready stance, entire weapon fully visible inside the frame. Detailed painted illustrated style matching detailed game character art, clean edges. Character occupies about 65% of frame height, centered, generous margin on all sides, whole body and whole weapon visible with space around them, feet on an invisible ground line near bottom. Perfectly flat solid magenta #ff00ff background, no shadow, no ground, no text, no other characters, no effects.",
+  "note": "Provider returned 1536x1024 despite the 1024x1024 request. For the 1:1 videos the master was padded with flat magenta to 1536x1536 as assets-source/boss/master-square.png (character then ~65% of frame height); master.png is the untouched original."
+ },
+ "videos": {
+  "tool": "video-from-file.mjs (Grok subscription)",
+  "model": "grok-imagine-video-1.5",
+  "referenceImage": "assets-source/boss/master-square.png",
+  "aspect_ratio": "1:1",
+  "resolution": "480p",
+  "walk": {
+   "file": "assets-source/boss/video-walk/video-2026-11-17T08-26-36-307Z-y82ztm.mp4",
+   "duration": 3,
+   "attempts": 1,
+   "request": "assets-source/boss/video-request-walk.json"
+  },
+  "attack": {
+   "file": "assets-source/boss/video-attack/video-2026-11-17T08-26-36-291Z-xkvror.mp4",
+   "duration": 3,
+   "attempts": 1,
+   "request": "assets-source/boss/video-request-attack.json"
+  },
+  "idle": {
+   "file": "assets-source/boss/video-idle/video-2026-11-17T08-26-36-256Z-c29mjo.mp4",
+   "duration": 2,
+   "attempts": 1,
+   "request": "assets-source/boss/video-request-idle.json"
+  }
+ },
+ "pipeline": [
+  "asset-pipeline.py extract <mp4> frames-<action>-raw --fps 12 (544x544 frames; walk 37, attack 37, idle 25)",
+  "asset-pipeline.py remove-bg frames-<action>-raw frames-<action>-rgba --method chroma --color ff00ff",
+  "per-action contact sheets sheet-<action>.png inspected for frame selection",
+  "assets-source/boss/normalize.py: magenta despill + 1px alpha erosion, one global scale 1.3187 (idle head-to-feet 364px -> 480px), one translation per action, 640x640 canvas, groundY 600"
+ ],
+ "selection": {
+  "idle": [
+   2,
+   7,
+   12,
+   17,
+   22
+  ],
+  "walk": [
+   5,
+   7,
+   9,
+   11,
+   13,
+   15,
+   17,
+   19
+  ],
+  "attack": [
+   3,
+   8,
+   13,
+   15,
+   20,
+   24,
+   28,
+   29,
+   32,
+   36
+  ],
+  "note": "Source frame numbers (frame-XXXX). Attack frames 11 and 27 avoided because the sword tip touches the top edge of the source video frame."
+ },
+ "final": {
+  "dir": "public/assets/frames/boss/",
+  "naming": "{idle,walk,attack}_{i}.png with i 0-based (idle_0..idle_4, walk_0..walk_7, attack_0..attack_9)",
+  "manifest": {
+   "canvas": [
+    640,
+    640
+   ],
+   "groundY": 600,
+   "actions": {
+    "idle": 5,
+    "walk": 8,
+    "attack": 10
+   }
+  },
+  "contactSheet": "assets-source/boss/contact-sheet.png (viewed and verified: no clipping, no visible magenta fringe)"
+ },
+ "knownIssues": [
+  "Idle motion is very subtle (breathing/sway only).",
+  "Attack video drifts down ~34 source px into the slam (preserved; reads as a lunge). Neutral attack frames sit ~9px above the idle ground line.",
+  "attack_7 (slam impact) has a small white impact splash under the blade tip from the video.",
+  "During the overhead hold the character turns slightly toward camera (3/4 view) - inherent to the generated video, still reads clearly side-on overall."
+ ],
+ "integrationNote": "Intermediate sheet-*.png / frames-* dirs were trimmed or gitignored before commit (regenerable from kept videos); final contact-sheet.png retained. Duplicate timestamped MP4 copies identical to named files were removed (guanyu), .generation.json sidecars kept."
+}

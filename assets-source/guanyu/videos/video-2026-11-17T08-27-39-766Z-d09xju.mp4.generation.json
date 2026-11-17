@@ -1,0 +1,14 @@
+{
+  "provider": "Grok subscription",
+  "model": "grok-imagine-video-1.5",
+  "parameters": {
+    "prompt": "Same warrior in STRICT side profile facing right for the ENTIRE clip — head, torso and feet stay in side view, he NEVER turns toward the camera, never faces the viewer. Locked camera, in place, constant scale. He performs ONE guandao slash: wind-up pulling the blade up and back over his shoulder, then a fast horizontal chop forward to the right in the side plane, blade sweeping through the right side of the frame, then recovery back to the ready stance. The large curved blade stays large, rigid and clearly visible at all times. No camera motion, flat magenta background, entire weapon and body always fully visible with margin, minimal motion blur.",
+    "duration": 3,
+    "aspect_ratio": "1:1",
+    "resolution": "480p"
+  },
+  "referenceImage": "C:\\Users\\qiyu0\\.dsh\\state\\superagent\\work\\dynasty-wars-demo-2ba50ba7f107\\assets-source\\guanyu\\master.png",
+  "path": "C:\\Users\\qiyu0\\.dsh\\state\\superagent\\work\\dynasty-wars-demo-2ba50ba7f107\\assets-source\\guanyu\\videos\\video-2026-11-17T08-27-39-766Z-d09xju.mp4",
+  "duration": 3,
+  "createdAt": "2026-11-17T08:27:39.768Z"
+}

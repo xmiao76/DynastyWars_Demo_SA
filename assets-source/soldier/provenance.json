@@ -1,0 +1,123 @@
+{
+ "character": "Cao Wei enemy infantry spearman (soldier), facing RIGHT (game flips horizontally as needed)",
+ "skill": "dsh-superagent-game-asset-workflow was requested but returned 'unknown skill' from the skill tool; proceeded following the task instructions directly",
+ "master": {
+  "model": "gpt-image-2 (image_generate, provider gpt)",
+  "attempts": 1,
+  "prompt": "Full body side view of an enemy infantry spearman soldier of Cao Wei from Three Kingdoms era, facing RIGHT, detailed painted non-pixel arcade beat-'em-up game sprite style, readable silhouette, blue-grey lamellar armor, conical iron helmet, holding a long spear with both hands angled forward in ready stance, spear tip pointing upper-right, entire long spear and full body fully visible, character occupies about 65% of frame height, generous margin on all sides so spear never touches edges, standing stance with feet apart, plain less ornate than a hero general, flat pure magenta #ff00ff solid background covering entire image, no shadow, no ground, no text, no scenery, no other characters",
+  "output": "assets-source/soldier/master.png (1536x1536)",
+  "notes": "Generator returned 1536x1024 despite 1024x1024 request (kept as master-raw.png); padded top/bottom with sampled magenta (253,3,251) to a 1536x1536 square so the 1:1 video would not crop the spear. Inspected with read_image: clean magenta, full spear, correct facing/armor."
+ },
+ "videos": {
+  "model": "grok-imagine-video-1.5 (via video-from-file.mjs, 480p, 1:1)",
+  "walk": {
+   "attempts": 1,
+   "duration": 3,
+   "prompt": "Same spearman soldier, locked camera, walking in place, side view, steady gait, spear carried at ready, constant scale, no camera motion, flat magenta background, entire spear and body always fully visible with margin.",
+   "file": "assets-source/soldier/walk.mp4",
+   "verdict": "Good: two full gait cycles in 37 frames @12fps, identity/spear stable, ground y~432 stable."
+  },
+  "idle": {
+   "attempts": 1,
+   "duration": 2,
+   "prompt": "Same spearman soldier, locked camera, idle breathing in place, spear ready, subtle sway, no camera motion, flat magenta background, full body and spear visible with margin.",
+   "file": "assets-source/soldier/idle.mp4",
+   "verdict": "Good: subtle spear rise/fall sway over 25 frames; selected frames form a smooth loop."
+  },
+  "attack": {
+   "attempts": 3,
+   "attempt1": {
+    "duration": 3,
+    "prompt": "Same spearman soldier, locked camera, side view, one clear spear thrust forward: wind-up pulling spear back, fast lunge thrust, recovery to ready stance. In place, constant scale, no camera motion, flat magenta background, entire spear always fully visible, minimal motion blur.",
+    "file": "assets-source/soldier/attack.mp4",
+    "verdict": "USED (with frame selection). Natural horizontal thrust, identity stable. Defect: at peak extension (source f23-32) the spear tip leaves the right edge of the source frame, and at max pull-back (f18-21) the butt touches the left edge. Those frames were omitted; f35 (still extended, tip fully visible) serves as the peak frame."
+   },
+   "attempt2": {
+    "duration": 3,
+    "reference": "master-attack-framing.png (master shrunk to 72% on magenta for headroom)",
+    "prompt": "Same spearman soldier, locked camera, wide shot, side view, one clear spear thrust forward and slightly upward diagonally: wind-up pulling spear back, fast lunge thrust, recovery to ready stance. In place, constant scale, no camera motion, no zoom, flat magenta background, generous empty magenta margin on all sides, spear tip and butt always at least 10 percent inside the frame, entire spear always fully visible, minimal motion blur.",
+    "file": "assets-source/soldier/attack2.mp4",
+    "verdict": "REJECTED: character lunges/travels right, spear stretches unnaturally and tip still exits frame; one-handed grip at peak; smaller/lower-res subject would break shared scale."
+   },
+   "attempt3": {
+    "duration": 3,
+    "prompt": "Same spearman soldier, locked camera, side view, feet planted in exactly the same spot, body does not travel forward, one compact short spear thrust diagonally up-right at 25 degrees: pull spear back, quick short thrust with both hands staying on the shaft, recover to the exact starting ready stance. Constant scale, no camera motion, no zoom, flat magenta background, spear tip never goes beyond its starting position and always stays well inside the frame, entire spear and body fully visible with margin, minimal motion blur.",
+    "file": "assets-source/soldier/attack3.mp4",
+    "verdict": "REJECTED in favor of attempt1: usable diagonal thrust and clean return to ready stance, but thrust angle snaps from horizontal to ~35deg (intermediate frames have tip off-frame top-right) and a diagonal-up peak reads worse against ground targets than attempt1's horizontal thrust. Kept on disk as fallback (frames-attack3-rgba)."
+   }
+  }
+ },
+ "processing": [
+  "asset-pipeline.py extract --fps 12 (544x544 frames)",
+  "asset-pipeline.py remove-bg --method chroma --color ff00ff",
+  "Per-action contact sheets (sheet-walk/idle/attack/attack2/attack3.png) inspected with read_image for weapon bending/cropping, identity drift, magenta spill",
+  "assets-source/soldier/normalize.py: magenta despill (pull R/B toward G where min(R,B)-G>30), ONE scale 1.10 + ONE translation (-54,-3) for all frames/actions, source ground y=432 -> canvas y=472, pasted on 512x512 transparent canvas; no per-pose crop/resize",
+  "Combined final contact sheet over dark background: assets-source/soldier/contact-sheet.png (viewed)"
+ ],
+ "frameSelection": {
+  "idle": {
+   "sourceFrames": [
+    4,
+    8,
+    12,
+    16,
+    20,
+    24
+   ],
+   "count": 6
+  },
+  "walk": {
+   "sourceFrames": [
+    2,
+    4,
+    7,
+    9,
+    11,
+    14,
+    16,
+    18
+   ],
+   "count": 8
+  },
+  "attack": {
+   "sourceFrames": [
+    1,
+    8,
+    14,
+    17,
+    22,
+    35,
+    37
+   ],
+   "count": 7,
+   "note": "from attack attempt 1"
+  }
+ },
+ "output": {
+  "directory": "public/assets/frames/soldier/",
+  "naming": "{idle,walk,attack}_N.png, N is 1-based",
+  "manifest": {
+   "canvas": [
+    512,
+    512
+   ],
+   "groundY": 472,
+   "actions": {
+    "idle": 6,
+    "walk": 8,
+    "attack": 7
+   }
+  },
+  "canvasNotes": "Head-to-feet on canvas is ~332px at scale 1.10 (~5% under the ~350px target): the spear butt-to-tip span (up to ~473px in source) does not fit a 512 canvas at scale 1.16 without clipping the blade. Body is necessarily left-of-center (feet midpoint ~x166) because the spear extends right; spear tip is the rightmost element. Same scale/offset for all actions, so cross-action alignment is exact."
+ },
+ "knownDefects": [
+  "Attack peak: true full-extension frames were unusable in all 3 attempts (spear tip exits source frame). Shipped attack uses f35 as peak: thrust travel is moderate (~54px source) but poses read clearly (ready -> level -> pull-back -> lunge -> extended -> recover).",
+  "Spear butt cap is clipped by a few px at the left canvas edge in some walk frames (walk_4/6/7/8) and more noticeably in attack wind-up frames (attack_4/5, where source butt is already near/at the source edge). Body/feet are never clipped.",
+  "Attack_6 spear point touches the right canvas edge (bbox x=512); blade is visually complete in the inspected frame.",
+  "Idle motion is mostly spear sway (tip rises/falls ~26px source) rather than chest breathing; body bob is small. Reads fine as a ready-stance sway loop.",
+  "Walk spear angle bobs slightly with gait (tip height varies ~24px source); spear stays straight, no bending observed.",
+  "Mild video softness vs the master still (480p source upscaled 1.10x); consistent across actions since all share the same pipeline. No identity drift: face/helmet/armor colors stable in all selected frames.",
+  "Residual magenta spill after despill is negligible on dark background inspection; a faint dark edge halo from chroma feathering remains at 100% zoom but is not visible at game size."
+ ],
+ "integrationNote": "Final frames were renamed from 1-based (_1.._N) to 0-based (_0.._N-1) during game integration to match the loader contract; contact-sheet labels still show the original 1-based names. An originX=166 (feet/body center) field was added to public/assets/frames/soldier/manifest.json. Intermediate sheet-*.png inspection images were trimmed before commit; final contact-sheet.png is retained."
+}

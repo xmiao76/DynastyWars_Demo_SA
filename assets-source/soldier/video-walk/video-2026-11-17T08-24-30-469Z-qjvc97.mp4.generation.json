@@ -1,0 +1,14 @@
+{
+  "provider": "Grok subscription",
+  "model": "grok-imagine-video-1.5",
+  "parameters": {
+    "prompt": "Same spearman soldier, locked camera, walking in place, side view, steady gait, spear carried at ready, constant scale, no camera motion, flat magenta background, entire spear and body always fully visible with margin.",
+    "duration": 3,
+    "aspect_ratio": "1:1",
+    "resolution": "480p"
+  },
+  "referenceImage": "C:\\Users\\qiyu0\\.dsh\\state\\superagent\\work\\dynasty-wars-demo-2ba50ba7f107\\assets-source\\soldier\\master.png",
+  "path": "C:\\Users\\qiyu0\\.dsh\\state\\superagent\\work\\dynasty-wars-demo-2ba50ba7f107\\assets-source\\soldier\\video-walk\\video-2026-11-17T08-24-30-469Z-qjvc97.mp4",
+  "duration": 3,
+  "createdAt": "2026-11-17T08:24:30.471Z"
+}
