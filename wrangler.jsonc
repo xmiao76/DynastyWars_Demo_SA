@@ -1,0 +1,8 @@
+{
+  // Cloudflare Pages project for this repository (Direct Upload).
+  // Live: https://dynasty-wars-demo-sa.pages.dev/
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "dynasty-wars-demo-sa",
+  "compatibility_date": "2026-11-01",
+  "pages_build_output_dir": "./dist"
+}

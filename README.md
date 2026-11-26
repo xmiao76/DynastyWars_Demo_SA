@@ -57,14 +57,20 @@ npm run build
 npm run preview    # http://127.0.0.1:4173
 ```
 
-## Deploy to Cloudflare Pages (manual)
+## Deploy to Cloudflare Pages
 
-1. `npm run build`
-2. In Cloudflare Pages, create a project from this repository (or use
-   `npx wrangler pages deploy dist`).
-3. Build command: `npm run build` · Output directory: `dist`.
-4. No environment variables, functions, or backend are required — the game
-   is fully static and makes no runtime AI/API calls.
+Live: **https://dynasty-wars-demo-sa.pages.dev/** (Cloudflare Pages project
+`dynasty-wars-demo-sa`, Direct Upload — see `wrangler.jsonc`).
+
+```bash
+npx wrangler@4 login # once, with the Cloudflare account that owns the project
+npm run deploy:cf    # npm run build, then `wrangler pages deploy --branch main`
+```
+
+Build command: `npm run build` · Output directory: `dist` (from
+`pages_build_output_dir` in `wrangler.jsonc`) · Production branch: `main`.
+No environment variables, functions, or backend are required — the game
+is fully static and makes no runtime AI/API calls.
 
 ## Verification
 

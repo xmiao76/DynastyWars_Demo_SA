@@ -7,7 +7,8 @@
     "dev": "vite --host 127.0.0.1 --port 5173",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 127.0.0.1 --port 4173",
-    "test:e2e": "node scripts/verify-browser.mjs"
+    "test:e2e": "node scripts/verify-browser.mjs",
+    "deploy:cf": "npm run build && npx --yes wrangler@4 pages deploy --branch main"
   },
   "dependencies": {
     "phaser": "^3.86.0"
