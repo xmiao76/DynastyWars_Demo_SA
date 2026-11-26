@@ -1,0 +1,8 @@
+{
+  "resolution": "480p",
+  "imagePath": "C:/Users/qiyu0/.dsh/state/superagent/work/red-cliffs-ablaze-bcccf103ff9f/assets-source/sword/master.png",
+  "prompt": "Same soldier, locked camera, one quick sword slash to the right: short visible wind-up raising the dao, fast diagonal chop, then recovery back to ready stance. Side view, in place, constant scale, no camera motion, flat magenta background, entire sword always fully visible, minimal motion blur.",
+  "outputDir": "C:/Users/qiyu0/.dsh/state/superagent/work/red-cliffs-ablaze-bcccf103ff9f/assets-source/sword/videos",
+  "aspect_ratio": "1:1",
+  "duration": 3
+}

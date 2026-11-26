@@ -1,0 +1,95 @@
+{
+ "character": "brute / 力士 - huge muscular Wei strongman soldier (not an officer), bare bulging arms, sleeveless studded leather-and-iron cuirass over coarse brown cloth, wide red sash, iron headband, massive two-handed studded war club/mace, side view facing right",
+ "master": {
+  "file": "assets-source/brute/master.png",
+  "rawFile": "assets-source/brute/master-raw.png",
+  "model": "gpt-image-2 (via image_generate, gpt provider)",
+  "requestedSize": "1024x1024",
+  "actualSize": [1536, 1024],
+  "attempts": 1,
+  "prompt": "Detailed painted illustration, game sprite master, strict side view facing right: a huge muscular Wei-dynasty strongman soldier (Three Kingdoms era), bare bulging arms, sleeveless studded leather-and-iron cuirass over coarse brown cloth, wide red sash, iron headband, gripping a massive heavy two-handed war club / mace with iron studs resting ready. Broad heavy silhouette, much bulkier than a normal soldier. Relaxed ready stance, feet planted wide apart. Whole character including club occupies only about 68% of frame height, centered, GENEROUS empty margin on ALL sides especially front/top — nothing cropped. Flat pure solid magenta #ff00ff background, no shadow, no ground, no text, no scenery. Not pixel art, clean edges.",
+  "note": "Provider returned 1536x1024 despite the 1024x1024 request. master.png is master-raw.png padded with flat #ff00ff magenta to 1536x1536 (centered) for the 1:1 videos; inspected with read_image before use - bulky strongman, full club visible, clean magenta."
+ },
+ "videos": {
+  "tool": "video-from-file.mjs (Grok subscription)",
+  "model": "grok-imagine-video-1.5",
+  "referenceImage": "assets-source/brute/master.png",
+  "aspect_ratio": "1:1",
+  "resolution": "480p",
+  "idle": {
+   "file": "assets-source/brute/videos/idle-a1.mp4",
+   "generationJson": "assets-source/brute/videos/idle-a1.mp4.generation.json",
+   "duration": 2,
+   "attempts": 1,
+   "request": "assets-source/brute/video-request-idle.json",
+   "prompt": "Same strongman, locked camera, full body idle breathing heavily in place, club held ready, subtle sway, no camera motion, no walking, flat magenta background, entire club always fully visible."
+  },
+  "walk": {
+   "file": "assets-source/brute/videos/walk-a1.mp4",
+   "generationJson": "assets-source/brute/videos/walk-a1.mp4.generation.json",
+   "duration": 3,
+   "attempts": 1,
+   "request": "assets-source/brute/video-request-walk.json",
+   "prompt": "Same strongman, locked camera, slow heavy walking in place to the right, side view, ponderous gait, club carried ready, constant scale, no camera motion, flat magenta background, entire club always fully visible."
+  },
+  "attack": {
+   "file": "assets-source/brute/videos/attack-a1.mp4",
+   "generationJson": "assets-source/brute/videos/attack-a1.mp4.generation.json",
+   "duration": 3,
+   "attempts": 1,
+   "request": "assets-source/brute/video-request-attack.json",
+   "prompt": "Same strongman, locked camera, one slow massive overhead club smash to the right: long wind-up raising the club high, powerful downward smash, then slow recovery back to ready stance. Side view, in place, constant scale, no camera motion, flat magenta background, entire club always fully visible, minimal motion blur."
+  },
+  "note": "Helper also wrote timestamped duplicates (video-2026-11-26T*.mp4); byte-identical copies were removed, named files + .generation.json sidecars kept. All 3 videos succeeded on attempt 1."
+ },
+ "pipeline": [
+  "asset-pipeline.py extract <mp4> frames-<action>-a1-raw --fps 12 (544x544 frames; idle 25, walk 37, attack 37)",
+  "asset-pipeline.py remove-bg frames-<action>-a1-raw frames-<action>-a1-keyed --method chroma --color ff00ff",
+  "per-action inspection sheets sheet-<action>.png built and viewed for frame selection",
+  "assets-source/brute/normalize.py: guanyu-style magenta despill, ONE global scale+translation, 512x512 canvas, groundY 472, source ground y=428, originX from idle feet span, contact sheet"
+ ],
+ "normalize": {
+  "canvas": [512, 512],
+  "groundY": 472,
+  "srcGroundY": 428,
+  "targetHeightPx": 345,
+  "idleSrcHeightPx": 260,
+  "scaleCaps": {"s_target": 1.327, "s_unionWidth": 1.246, "s_raisedClubTop": 1.184},
+  "scale": 1.1837,
+  "bindingConstraint": "raised-club top: attack frame-0008 (club straight up) reaches 392px above the feet in source; fitting it uncropped above groundY=472 caps scale at 1.184",
+  "actualCharHeightPx": "~308 (idle bbox 161..470). 345px tall is geometrically impossible with the raised club uncropped (max = 472/(392/260) ~= 313px). The brute still reads much heavier than a regular soldier through body width (~150px torso) and the oversized club; idle sprite spans 311px wide incl. club.",
+  "dx": -122,
+  "dy": -35
+ },
+ "selection": {
+  "idle": [3, 6, 9, 12, 9, 6],
+  "walk": [5, 7, 9, 11, 13, 15, 17, 19],
+  "attack": [1, 5, 8, 11, 21, 23, 25, 29, 33, 37],
+  "note": "Source frame numbers (frame-XXXX). Idle is ping-pong (source drift is one-way). Attack: ready->raise->club straight up->tilt back->swing->downswing->SMASH (25)->low recovery->rising->ready. Behind-head hold extremes (13-20, club tip x=52) and farthest debris frames (26-27, x=540) skipped so union width does not become a harsher scale cap."
+ },
+ "strikeFrac": {
+  "attack": 0.67,
+  "note": "Smash lands at attack_6 (source frame-0025, club head on ground), index 6 of 10 frames = 6/9 frame-interval fraction."
+ },
+ "final": {
+  "dir": "public/assets/frames/brute/",
+  "naming": "{idle,walk,attack}_{i}.png with i 0-based (idle_0..idle_5, walk_0..walk_7, attack_0..attack_9)",
+  "manifest": {
+   "canvas": [512, 512],
+   "groundY": 472,
+   "originX": 142,
+   "actions": {"idle": 6, "walk": 8, "attack": 10},
+   "strikeFrac": {"attack": 0.67}
+  },
+  "originXNote": "Center of the feet span (x 67..218) in idle_0 measured on canvas by normalize.py; green line on contact sheet passes through the torso/feet center.",
+  "contactSheet": "assets-source/brute/contact-sheet.png (viewed: identity consistent, feet on ground line, club never cropped incl. raised frame with 7px top margin, no visible magenta fringe)"
+ },
+ "knownIssues": [
+  "Character is ~308px tall on canvas, not the requested ~345px: the raised-club wind-up cap (see normalize.bindingConstraint) makes 345px impossible without cropping the club. Bulk/width still clearly exceeds regular soldiers.",
+  "Club head shifts greenish during the raised/downswing frames (attack_2, attack_5) - color drift inherent to the generated video, not chroma spill (idle/walk club keeps master colors).",
+  "attack_6 (smash impact) has a small dark-red impact splash under the club head from the video; reads as ground impact, kept deliberately.",
+  "Walk gait has two exaggerated high-knee steps (walk_0/walk_1); ponderous and on-character but the loop seam (walk_7 -> walk_0) is approximate.",
+  "Idle drifts very slightly right/front across the ping-pong (source clip property); feet stay planted near groundY 472 (bbox bottoms 470-477 across all final frames).",
+  "Video character is somewhat more front-facing than the strict-profile master in later idle frames; still reads side-on in walk/attack."
+ ]
+}

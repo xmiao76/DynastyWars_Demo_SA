@@ -1,0 +1,8 @@
+{
+  "resolution": "480p",
+  "imagePath": "C:/Users/qiyu0/.dsh/state/superagent/work/red-cliffs-ablaze-bcccf103ff9f/assets-source/sword/master.png",
+  "prompt": "Same soldier, locked camera, strict side view facing right the whole time, feet planted in exactly the same spot, body does not travel or turn. ONE single sword slash: raise the dao up in a short wind-up, one fast diagonal chop down to the right, then immediately lower the sword and return to the EXACT starting ready stance with sword held low at his side, and hold that ready stance still until the end. In place, constant scale, no camera motion, no zoom, flat magenta background, entire sword always fully visible with margin, minimal motion blur, absolutely no sparkles, no flashes, no effects, no extra objects.",
+  "outputDir": "C:/Users/qiyu0/.dsh/state/superagent/work/red-cliffs-ablaze-bcccf103ff9f/assets-source/sword/videos",
+  "aspect_ratio": "1:1",
+  "duration": 3
+}

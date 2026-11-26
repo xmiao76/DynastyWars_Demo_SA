@@ -1,0 +1,14 @@
+{
+  "provider": "Grok subscription",
+  "model": "grok-imagine-video-1.5",
+  "parameters": {
+    "prompt": "Same strongman, locked camera, one slow massive overhead club smash to the right: long wind-up raising the club high, powerful downward smash, then slow recovery back to ready stance. Side view, in place, constant scale, no camera motion, flat magenta background, entire club always fully visible, minimal motion blur.",
+    "duration": 3,
+    "aspect_ratio": "1:1",
+    "resolution": "480p"
+  },
+  "referenceImage": "C:\\Users\\qiyu0\\.dsh\\state\\superagent\\work\\red-cliffs-ablaze-bcccf103ff9f\\assets-source\\brute\\master.png",
+  "path": "C:\\Users\\qiyu0\\.dsh\\state\\superagent\\work\\red-cliffs-ablaze-bcccf103ff9f\\assets-source\\brute\\videos\\video-2026-11-26T03-39-46-078Z-drmd89.mp4",
+  "duration": 3,
+  "createdAt": "2026-11-26T03:39:46.080Z"
+}

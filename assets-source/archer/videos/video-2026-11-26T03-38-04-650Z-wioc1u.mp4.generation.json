@@ -1,0 +1,14 @@
+{
+  "provider": "Grok subscription",
+  "model": "grok-imagine-video-1.5",
+  "parameters": {
+    "prompt": "Same archer, locked camera, full body idle breathing in place, bow held lowered and ready, subtle sway, no camera motion, no walking, flat magenta background, entire bow always fully visible.",
+    "duration": 2,
+    "aspect_ratio": "1:1",
+    "resolution": "480p"
+  },
+  "referenceImage": "C:\\Users\\qiyu0\\.dsh\\state\\superagent\\work\\red-cliffs-ablaze-bcccf103ff9f\\assets-source\\archer\\master.png",
+  "path": "C:\\Users\\qiyu0\\.dsh\\state\\superagent\\work\\red-cliffs-ablaze-bcccf103ff9f\\assets-source\\archer\\videos\\video-2026-11-26T03-38-04-650Z-wioc1u.mp4",
+  "duration": 2,
+  "createdAt": "2026-11-26T03:38:04.652Z"
+}

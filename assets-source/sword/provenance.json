@@ -1,0 +1,98 @@
+{
+ "character": "Wei-dynasty Chinese sword soldier / 刀兵 (char id 'sword'), Three Kingdoms era, facing RIGHT (game flips horizontally as needed)",
+ "skill": "dsh-superagent-game-asset-workflow was requested but returned 'unknown skill' from the skill tool (not in this session's catalog); proceeded following the task instructions directly, copying the established guanyu/soldier pipeline conventions",
+ "master": {
+  "model": "gpt-image-2 (image_generate, provider gpt, requested 1024x1024)",
+  "attempts": 1,
+  "prompt": "Detailed painted illustration, game sprite master, strict side view facing right: a Wei-dynasty Chinese sword soldier (Three Kingdoms era), plain iron lamellar armor over dark red-brown cloth uniform, simple cloth head wrap with small iron cap, holding a single-edged ring-pommel dao broadsword ready at his side, no shield. Relaxed ready combat stance, feet planted apart. Whole character including sword occupies only about 65% of frame height, centered, GENEROUS empty margin on ALL sides especially front/top — nothing cropped. Flat pure solid magenta #ff00ff background, no shadow, no ground, no text, no scenery. Not pixel art, clean edges.",
+  "output": "assets-source/sword/master.png (1536x1536)",
+  "notes": "Generator returned 1536x1024 despite the 1024x1024 request (kept as master-raw.png); padded top/bottom to a 1536x1536 square with the sampled background magenta (253,3,250) using PIL in the game-tools venv, so the 1:1 video would not crop the sword. Inspected with read_image: strict side view facing right, ring-pommel dao, iron lamellar over dark red-brown cloth, head wrap + small iron cap, clean flat magenta, generous margins, nothing cropped."
+ },
+ "videos": {
+  "model": "grok-imagine-video-1.5 (via game-tools/video-from-file.mjs, 480p, 1:1, imagePath=master.png; request JSONs in assets-source/sword/video-request-*.json, .generation.json sidecars kept next to each mp4 in videos/)",
+  "idle": {
+   "attempts": 1,
+   "duration": 2,
+   "prompt": "Same soldier, locked camera, full body idle breathing in place, subtle sway, sword held ready, no camera motion, no walking, flat magenta background, entire sword always fully visible.",
+   "file": "assets-source/sword/videos/idle-a1.mp4",
+   "verdict": "USED. Subtle sway over 25 frames @12fps, identity/sword stable. Later frames (16+) drift right ~24px and sink ~5px, so the loop is built ping-pong from frames 2..10 only."
+  },
+  "walk": {
+   "attempts": 1,
+   "duration": 3,
+   "prompt": "Same soldier, locked camera, walking in place to the right, side view, steady marching gait, sword held ready, constant scale, no camera motion, flat magenta background, entire sword always fully visible.",
+   "file": "assets-source/sword/videos/walk-a1.mp4",
+   "verdict": "USED. Clear high-knee marching gait in place over 37 frames @12fps; one ~13-frame cycle (frames 7..19, frame 20 repeats frame 7's knee-up pose) sampled to 8. Sword arm counter-swings naturally; blade stays straight and fully in frame."
+  },
+  "attack": {
+   "attempts": 2,
+   "attempt1": {
+    "duration": 3,
+    "prompt": "Same soldier, locked camera, one quick sword slash to the right: short visible wind-up raising the dao, fast diagonal chop, then recovery back to ready stance. Side view, in place, constant scale, no camera motion, flat magenta background, entire sword always fully visible, minimal motion blur.",
+    "file": "assets-source/sword/videos/attack-a1.mp4",
+    "verdict": "REJECTED: readable overhead chop and lunge, but frames 22-23 have a sparkle/star effect at the blade tip, the body turns semi-frontal during the wind-up, and the clip ends with the sword raised instead of returning to the ready stance. Kept on disk (frames-attack-a1-keyed) as fallback."
+   },
+   "attempt2": {
+    "duration": 3,
+    "prompt": "Same soldier, locked camera, strict side view facing right the whole time, feet planted in exactly the same spot, body does not travel or turn. ONE single sword slash: raise the dao up in a short wind-up, one fast diagonal chop down to the right, then immediately lower the sword and return to the EXACT starting ready stance with sword held low at his side, and hold that ready stance still until the end. In place, constant scale, no camera motion, no zoom, flat magenta background, entire sword always fully visible with margin, minimal motion blur, absolutely no sparkles, no flashes, no effects, no extra objects.",
+    "file": "assets-source/sword/videos/attack-a2.mp4",
+    "verdict": "USED. Strict side view, feet planted (alpha-bbox bottom = 426 in all 37 frames), wind-up overhead (frames 10-17), chop (18-20), recovery to the exact starting ready stance held from frame 26 on. No effects, sword never cropped (max x=418, min y=84 in source)."
+   }
+  }
+ },
+ "processing": [
+  "asset-pipeline.py extract --fps 12 (544x544 frames) into frames-<action>-<attempt>/ dirs",
+  "asset-pipeline.py remove-bg --method chroma --color ff00ff into frames-<action>-<attempt>-keyed/ dirs",
+  "Per-action contact sheets inspected with read_image for weapon cropping/bending, identity drift, camera motion and magenta spill (intermediate sheet-*.png inspection images deleted after use)",
+  "assets-source/sword/normalize.py (adapted from guanyu's): same two-step magenta despill, ONE global scale 1.17 + translation (dx=-68, dy=-26) for all frames/actions, source ground y=426 (idle alpha-bbox bottom) -> canvas y=472, 512x512 transparent canvas, no per-pose crop/resize. Scale set by the ~300px-tall target (source head-to-feet 256px); cropping caps were s<=1.40 (wind-up tip height) and s<=2.00 (union width 246px). One small per-action offset: walk +2px down because every walk frame's lowest foot sits 2-4px above the source ground line.",
+  "originX=220 computed in normalize.py as the midpoint of the feet alpha extent (x 161..280) in the bottom 30px band of final idle_0",
+  "Combined final contact sheet over dark background with ground line: assets-source/sword/contact-sheet.png (viewed with read_image; two normalize passes - first pass prompted an attack reselection so the strike frame is the fully-forward blade, plus the walk ground offset tweak)"
+ ],
+ "frameSelection": {
+  "idle": {
+   "sourceFrames": [2, 4, 6, 8, 10, 8, 6, 4],
+   "count": 8,
+   "note": "ping-pong loop from the drift-free early part of idle-a1"
+  },
+  "walk": {
+   "sourceFrames": [7, 9, 10, 12, 14, 15, 17, 19],
+   "count": 8,
+   "note": "one gait cycle from walk-a1"
+  },
+  "attack": {
+   "sourceFrames": [1, 7, 10, 14, 18, 20, 22, 25, 30],
+   "count": 9,
+   "note": "from attack attempt 2: ready, extend, raise, wind-up peak, chop mid, STRIKE (frame 20), follow-through, near-ready, exact ready"
+  }
+ },
+ "strikeFrac": {
+  "attack": 0.625,
+  "reasoning": "Selected attack output index 5 (0-based) is source frame 20 of attack-a2, where the descending blade first reaches full forward extension at target height - the visible moment the chop lands. strikeFrac = 5/(9-1) = 0.625."
+ },
+ "output": {
+  "directory": "public/assets/frames/sword/",
+  "naming": "{idle,walk,attack}_N.png, N is 0-based (matching guanyu/soldier/boss loader contract)",
+  "manifest": {
+   "canvas": [512, 512],
+   "groundY": 472,
+   "originX": 220,
+   "actions": {"idle": 8, "walk": 8, "attack": 9},
+   "strikeFrac": {"attack": 0.625}
+  },
+  "canvasNotes": "Character is ~300px head-to-feet on canvas at scale 1.17 (idle bbox y 172..472). Body sits left-of-center (originX=220) because the dao and the attack arc extend right; extreme selected-pose extents are x=112 (wind-up tip, attack_3) and x=399 (strike tip, attack_5), top y=80 (attack_4). Same scale/offset for all actions, so cross-action alignment is exact."
+ },
+ "qualityAssessment": [
+  "Identity is stable across all 25 shipped frames: face/head-wrap/armor colors and proportions do not drift; all clips share the identical first frame.",
+  "Sword is never cropped in any selected frame and never visibly bends; the blade stays straight through walk counter-swing and the attack chop.",
+  "Feet sit on the ground line: attack soles exactly at y=472 in every frame, idle within 4px, walk within 2px after the +2 offset.",
+  "Attack reads clearly ready -> wind-up overhead -> chop -> recovery -> exact ready stance (attack_8 matches attack_0), so it loops back to idle without a pop."
+ ],
+ "knownDefects": [
+  "Idle motion is subtle (small body/sword sway over frames 2..10, sword tip travels ~19px on canvas); usable as a breathing loop but quieter than guanyu's idle.",
+  "Walk is a high-knee march rather than a relaxed walk, and the sword arm counter-swings so the blade points down-back in walk_1/walk_2. Natural for a marching soldier, but the sword is not held in a constant ready guard.",
+  "Attack wind-up (attack_2/attack_3) raises the dao high overhead/behind the head in a slightly ceremonial arc; readable and in-profile, but slower-looking than a compact military chop. The chop itself (attack_4 -> attack_5) is a single-frame transition, by design for speed.",
+  "Despill leaves the bright blade slightly warm-grey (mean blade RGB shifts from (229,202,210) keyed to (215,190,162) final); consistent with the guanyu pipeline's despill and not noticeable at game size. Residual magenta fringe is negligible on dark-background inspection.",
+  "Mild 480p video softness upscaled 1.17x, consistent across actions and with the other characters.",
+  "Walk horizontal body position sways a few px through the gait (source bbox left edge ranges 166..222 across the full clip, mostly limb swing); no per-frame recentering was applied, per the one-global-transform contract."
+ ]
+}

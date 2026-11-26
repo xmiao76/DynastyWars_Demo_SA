@@ -7,7 +7,17 @@
  "actions": {
   "idle": 8,
   "walk": 8,
-  "attack": 9
+  "attack": 9,
+  "throw": 9
  },
- "originX": 223
+ "originX": 223,
+ "strikeFrac": {
+  "attack": 0.55,
+  "throw": 0.625
+ },
+ "grip": {
+  "dx": 160,
+  "dy": -247
+ },
+ "throwReleaseIndex": 5
 }

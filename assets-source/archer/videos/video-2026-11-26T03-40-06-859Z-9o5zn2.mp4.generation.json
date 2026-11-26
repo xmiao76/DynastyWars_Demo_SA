@@ -1,0 +1,14 @@
+{
+  "provider": "Grok subscription",
+  "model": "grok-imagine-video-1.5",
+  "parameters": {
+    "prompt": "Same archer, WIDE locked static shot, absolutely no zoom and no camera motion, character stays exactly the same size and position from first to last frame, head and feet and full bow always inside the frame with empty magenta margin on all sides. Strict side profile facing right the whole time, never turns toward the camera. He shoots one arrow to the right: raises the bow, draws with a visible aim hold, releases once, then lowers back to the exact starting ready stance. Feet planted in place, flat magenta background, minimal motion blur.",
+    "duration": 3,
+    "aspect_ratio": "1:1",
+    "resolution": "480p"
+  },
+  "referenceImage": "C:\\Users\\qiyu0\\.dsh\\state\\superagent\\work\\red-cliffs-ablaze-bcccf103ff9f\\assets-source\\archer\\master.png",
+  "path": "C:\\Users\\qiyu0\\.dsh\\state\\superagent\\work\\red-cliffs-ablaze-bcccf103ff9f\\assets-source\\archer\\videos\\video-2026-11-26T03-40-06-859Z-9o5zn2.mp4",
+  "duration": 3,
+  "createdAt": "2026-11-26T03:40:06.861Z"
+}

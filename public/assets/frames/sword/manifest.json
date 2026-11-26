@@ -1,0 +1,16 @@
+{
+ "canvas": [
+  512,
+  512
+ ],
+ "groundY": 472,
+ "originX": 220,
+ "actions": {
+  "idle": 8,
+  "walk": 8,
+  "attack": 9
+ },
+ "strikeFrac": {
+  "attack": 0.625
+ }
+}
