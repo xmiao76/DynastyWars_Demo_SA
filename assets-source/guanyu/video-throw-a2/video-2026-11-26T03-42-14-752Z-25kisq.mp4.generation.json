@@ -1,0 +1,14 @@
+{
+  "provider": "Grok subscription",
+  "model": "grok-imagine-video-1.5",
+  "parameters": {
+    "prompt": "Same warrior, locked camera, side view facing right, performing a one-handed grab-and-throw of an invisible opponent in front of him. IMPORTANT: he keeps gripping his guandao in his rear (left) hand the ENTIRE time, blade held up and back, never putting the weapon down. With his free front hand he seizes the invisible enemy at arm's length, hauls the weight in toward his hip, then heaves powerfully forward, releasing to the right, and settles back into his two-handed ready stance. One clear readable throw, in place, constant scale, no camera motion, flat magenta background, entire weapon and body always fully visible, minimal motion blur.",
+    "duration": 3,
+    "aspect_ratio": "1:1",
+    "resolution": "480p"
+  },
+  "referenceImage": "C:\\Users\\qiyu0\\.dsh\\state\\superagent\\work\\red-cliffs-ablaze-bcccf103ff9f\\assets-source\\guanyu\\master.png",
+  "path": "C:\\Users\\qiyu0\\.dsh\\state\\superagent\\work\\red-cliffs-ablaze-bcccf103ff9f\\assets-source\\guanyu\\video-throw-a2\\video-2026-11-26T03-42-14-752Z-25kisq.mp4",
+  "duration": 3,
+  "createdAt": "2026-11-26T03:42:14.755Z"
+}

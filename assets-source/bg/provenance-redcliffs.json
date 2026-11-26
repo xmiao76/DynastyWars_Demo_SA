@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-25",
+  "provider": "ChatGPT subscription",
+  "model": "gpt-image-2 (native image_generate)",
+  "backgrounds": [
+    {
+      "name": "fleet",
+      "sourceFile": "fleet-source.png (2172x724 as returned; 1536x1024 requested)",
+      "shippedFile": "public/assets/bg/fleet.jpg (RGB JPEG q88 via PIL)",
+      "prompt": "Side-view 2D beat-em-up game background, detailed painted illustration, wide panorama: a burning chained warship fleet at night during the Battle of Red Cliffs (Three Kingdoms). Foreground: a wide empty wooden warship deck with long planks running horizontally, occupying the bottom 28 percent of the image, completely clear and walkable with no obstacles, no characters. Deck railings and thick mooring chains link to neighboring ship decks visible left and right at the same level. Middle distance: tall masts, rigging, tattered sails, red Wei banners and flags, some sails and a distant ship on fire with orange flames and drifting smoke. Background: dark Yangtze river with firelight reflections, silhouettes of more chained warships, steep dark cliffs, night sky glowing orange and smoky near the horizon, embers in the air. Warm firelight from the right, deep blue night shadows. No people, no characters, no text, no watermark, no UI. Horizontal composition that can tile side by side, eye-level side view, ground line straight and level.",
+      "assessment": "Deck band aligns with the game's ground lanes (deck top ~72% height vs ground top 398/540=74%); tiling seam passes through water/dark sky and is inconspicuous in play. Used for sections 1-5."
+    },
+    {
+      "name": "flagship (command deck)",
+      "sourceFile": "flagship-source.png (2172x724 as returned; 1536x1024 requested)",
+      "shippedFile": "public/assets/bg/flagship.jpg (RGB JPEG q88 via PIL)",
+      "prompt": "Side-view 2D beat-em-up game background, detailed painted illustration, wide panorama: the raised command deck of a giant ancient Chinese flagship at night during the Battle of Red Cliffs. Foreground: wide empty polished wooden deck planks occupying the bottom 28 percent, completely clear and walkable, no characters, no obstacles. Behind the deck: an imposing multi-tier wooden command tower with curved tiled roofs, a huge command drum, tall red Wei general's banners and a large command flag, braziers with flames, weapon racks along the edges. Beyond the railings: the burning chained fleet on the dark Yangtze river, firelit smoke, distant cliffs, orange night sky. Warm firelight, deep blue shadows, embers in the air. No people, no characters, no text, no watermark, no UI. Eye-level side view, straight level ground line, composition can tile horizontally.",
+      "assessment": "Command tower + great drum + banners give Yu Jin's arena a distinct silhouette. Used for section 6 (Command Deck)."
+    }
+  ],
+  "notes": "Old land-battlefield and camp backgrounds are retained in the repo but no longer loaded by the game. Gangplank plank-bridge, fire patches, props and hazard markings are drawn in code over these panoramas."
+}

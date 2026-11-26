@@ -1,0 +1,14 @@
+{
+  "provider": "Grok subscription",
+  "model": "grok-imagine-video-1.5",
+  "parameters": {
+    "prompt": "Same warrior, locked camera, side view facing right, performing a grab-and-throw of an invisible opponent in front of him: he plants his guandao butt-down, reaches forward with his front hand as if seizing an enemy by the chest at arm's length, hauls the weight in toward his hip, then heaves powerfully forward and releases to the right, ending back in his ready stance gripping the guandao with both hands. One clear readable throw motion, in place, constant scale, no camera motion, flat magenta background, entire weapon and body always fully visible, minimal motion blur.",
+    "duration": 3,
+    "aspect_ratio": "1:1",
+    "resolution": "480p"
+  },
+  "referenceImage": "C:\\Users\\qiyu0\\.dsh\\state\\superagent\\work\\red-cliffs-ablaze-bcccf103ff9f\\assets-source\\guanyu\\master.png",
+  "path": "C:\\Users\\qiyu0\\.dsh\\state\\superagent\\work\\red-cliffs-ablaze-bcccf103ff9f\\assets-source\\guanyu\\video-throw\\video-2026-11-26T03-39-23-774Z-32k6el.mp4",
+  "duration": 3,
+  "createdAt": "2026-11-26T03:39:23.783Z"
+}

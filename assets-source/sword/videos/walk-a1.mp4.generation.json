@@ -1,0 +1,14 @@
+{
+  "provider": "Grok subscription",
+  "model": "grok-imagine-video-1.5",
+  "parameters": {
+    "prompt": "Same soldier, locked camera, walking in place to the right, side view, steady marching gait, sword held ready, constant scale, no camera motion, flat magenta background, entire sword always fully visible.",
+    "duration": 3,
+    "aspect_ratio": "1:1",
+    "resolution": "480p"
+  },
+  "referenceImage": "C:\\Users\\qiyu0\\.dsh\\state\\superagent\\work\\red-cliffs-ablaze-bcccf103ff9f\\assets-source\\sword\\master.png",
+  "path": "C:\\Users\\qiyu0\\.dsh\\state\\superagent\\work\\red-cliffs-ablaze-bcccf103ff9f\\assets-source\\sword\\videos\\video-2026-11-26T03-38-17-597Z-3ftfas.mp4",
+  "duration": 3,
+  "createdAt": "2026-11-26T03:38:17.599Z"
+}

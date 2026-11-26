@@ -10,6 +10,8 @@ export class AudioEngine {
   private step = 0;
   muted = false;
   started = false;
+  /** Boss encounters switch the loop to a faster, lower pattern. */
+  bossMode = false;
 
   /** Must be called from a user-gesture handler. Safe to call repeatedly. */
   start(): void {
@@ -44,14 +46,16 @@ export class AudioEngine {
   // ---- music: slow pentatonic pluck loop + war drum (original pattern) ----
   private scheduleMusic(): void {
     if (!this.ctx || !this.musicGain) return;
-    const SPB = 0.42; // seconds per eighth note
-    // D pentatonic-ish original loop (Hz), 0 = rest.
-    const melody = [
+    const SPB = this.bossMode ? 0.3 : 0.42; // seconds per eighth note
+    // D pentatonic-ish original loop (Hz), 0 = rest. Boss mode drops the
+    // melody a fourth and doubles the war-drum pattern.
+    const base = [
       293.66, 0, 369.99, 440.0, 0, 587.33, 440.0, 369.99,
       293.66, 0, 220.0, 293.66, 369.99, 0, 440.0, 0,
       587.33, 0, 659.25, 587.33, 440.0, 369.99, 293.66, 220.0,
       246.94, 293.66, 0, 0, 220.0, 0, 0, 0,
     ];
+    const melody = this.bossMode ? base.map((f) => (f > 0 ? f * 0.749 : 0)) : base;
     while (this.nextNoteTime < this.ctx.currentTime + 0.3) {
       const t = this.nextNoteTime;
       const idx = this.step % melody.length;
@@ -59,7 +63,8 @@ export class AudioEngine {
       if (freq > 0) this.pluck(freq, t, 0.16);
       if (idx % 8 === 0) this.drum(t, 0.5);
       else if (idx % 8 === 4) this.drum(t, 0.3);
-      if (idx % 16 === 0) this.pluck(110.0, t, 0.5, 0.7); // low root
+      else if (this.bossMode && idx % 4 === 2) this.drum(t, 0.22);
+      if (idx % 16 === 0) this.pluck(this.bossMode ? 82.4 : 110.0, t, 0.5, 0.7); // low root
       this.nextNoteTime += SPB;
       this.step += 1;
     }
@@ -179,6 +184,73 @@ export class AudioEngine {
 
   ui(): void {
     this.tone('triangle', 660, 880, 0.09, 0.15);
+  }
+
+  grab(): void {
+    this.tone('square', 160, 90, 0.12, 0.25);
+  }
+
+  throwWhoosh(): void {
+    if (!this.ctx || !this.master) return;
+    const src = this.noise(0.3);
+    if (!src) return;
+    const t = this.ctx.currentTime;
+    const filter = this.ctx.createBiquadFilter();
+    filter.type = 'bandpass';
+    filter.Q.value = 0.8;
+    filter.frequency.setValueAtTime(500, t);
+    filter.frequency.exponentialRampToValueAtTime(2200, t + 0.22);
+    const g = this.ctx.createGain();
+    g.gain.setValueAtTime(0.3, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
+    src.connect(filter).connect(g).connect(this.master);
+    src.start(t);
+  }
+
+  explosion(): void {
+    this.tone('sine', 110, 28, 0.55, 0.65);
+    if (!this.ctx || !this.master) return;
+    const src = this.noise(0.45);
+    if (!src) return;
+    const t = this.ctx.currentTime;
+    const filter = this.ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(2600, t);
+    filter.frequency.exponentialRampToValueAtTime(160, t + 0.4);
+    const g = this.ctx.createGain();
+    g.gain.setValueAtTime(0.55, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.45);
+    src.connect(filter).connect(g).connect(this.master);
+    src.start(t);
+  }
+
+  arrowRelease(): void {
+    this.tone('square', 900, 1400, 0.07, 0.12);
+    this.swing();
+  }
+
+  clank(): void {
+    this.tone('square', 1400, 700, 0.09, 0.18);
+    this.tone('square', 2100, 1100, 0.06, 0.1);
+  }
+
+  creak(): void {
+    this.tone('sawtooth', 90, 60, 0.7, 0.16);
+  }
+
+  pickup(): void {
+    this.tone('triangle', 520, 780, 0.1, 0.18);
+    window.setTimeout(() => this.tone('triangle', 780, 1040, 0.12, 0.15), 80);
+  }
+
+  medal(): void {
+    [587.33, 880.0, 1174.66].forEach((f, i) => {
+      window.setTimeout(() => this.tone('triangle', f, f, 0.22, 0.18), i * 110);
+    });
+  }
+
+  chargeTell(): void {
+    this.tone('sawtooth', 196, 196, 0.28, 0.2);
   }
 
   jingle(win: boolean): void {

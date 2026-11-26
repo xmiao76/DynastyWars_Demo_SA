@@ -1,65 +1,47 @@
-# Implementation plan & media-capability summary
+# Red Cliffs Ablaze — implementation notes
 
-Baseline: commit `ec92051` ("Initial commit") — repository contained only
-`.gitattributes`. **No runnable game existed**, so there is no meaningful
-"Before" gameplay capture; verification evidence is After-only by necessity,
-with this baseline documented here and in the PR.
+Extends the shipped Dynasty Wars demo (baseline documented in
+`docs/RED_CLIFFS_BASELINE.md`: main @ 8dcc252, 26/26 browser checks before
+the refactor) into the full single-stage arcade game of issue #3. The
+existing Phaser renderer, approved realistic art and controls are retained.
 
-## Stack
-TypeScript + Vite + Phaser 3, static build (`dist/`) suitable for
-Cloudflare Pages. No backend, no runtime AI calls, no accounts.
+## Structure
+- Fixed 60 Hz simulation step; rendering/HUD are read-only views of sim
+  state. Seeded encounter selection, per-move timing tables and authored
+  section data live in `src/data.ts`; the scene (`src/game.ts`) only
+  executes them.
+- Stage: 6,200px world — Prow, Gangplank (narrow depth band over water),
+  Archer Deck, Burning Deck (fire patches + falling mast), Flagship
+  Foredeck, Command Deck (Yu Jin). Camera-lock encounters with sequential
+  waves, visible edge entries, spawn grace, GO arrow on clear.
+- Combat budgets: at most 2 melee + 1 ranged attackers (boss included);
+  no new attacks against a downed player; wake-up i-frames; per-swing hit
+  registration once per target; armored wind-ups only broken by heavy hits.
+- Replay: fixed Arcade (`variants[0]`), seeded Remix re-picking authored
+  variants for decks 2–5 only; score events with anti-farm caps; medals;
+  checkpoint snapshots so continues cannot duplicate points; records in
+  `src/records.ts` with a session fallback.
 
-## Media capabilities (verified in this environment, 2026-11-17 preflight)
-- Coding/orchestration model: Muse-Wonder-Full-1.0-contributor (xhigh).
-  Media tools call separate models; using them does not change the coding model.
-- Image generation + reference-image editing: native `image_generate`,
-  ChatGPT subscription, **gpt-image-2** (live generation and reference edit
-  both verified in preflight).
-- Image-to-video: native `video_generate` / local-file helper
-  (`video-from-file.mjs`), Grok subscription, **grok-imagine-video-1.5**.
-  Args: prompt, duration 1–15s, aspect_ratio, resolution, image_url.
-  **No ending-frame or exact-loop control** exists; frame 1 is not guaranteed
-  to match the conditioning image exactly.
-- Processing: FFmpeg frame extraction, magenta chroma-key background removal
-  (preserves thin weapons better than the installed rembg/u2netp model, which
-  damaged a weapon in testing), fixed-canvas packing, contact sheets —
-  via `asset-pipeline.py` in the local game-tools venv.
-- Browser verification: Playwright + headless Chromium (keyboard input,
-  screenshots, console/network capture).
-
-## Animation workflow (milestone 1 POC, then reused)
-1. One immutable master reference per character on flat magenta (#ff00ff),
-   full body + full weapon with generous margin, side view facing right.
-   Guan Yu's master is derived by reference-edit from the preflight master
-   (same face/costume/weapon) into a ready stance with more weapon clearance.
-2. One short video clip per action (idle / walk / attack), locked camera,
-   in-place motion, flat magenta background.
-3. Extract frames → chroma-key → select/retime frames → normalize every
-   action of a character onto one shared canvas + ground line (never
-   per-pose crop/resize) → transparent PNG frames + per-character manifest.
-4. Inspect contact sheets for identity drift, weapon bending/cropping,
-   scale/camera drift, keying spill, loop seams. Max 3 generation attempts
-   per action; then change approach and report honestly.
-5. Game code owns movement, hitboxes, damage timing and i-frames; sprites
-   never dictate combat rules.
-
-## Game structure
-- `BootScene`: manifest/asset preload with progress + error surface,
-  animation registration.
-- `TitleScene`: title, controls, start.
-- `GameScene`: one stage (~3400px), depth-band ground plane, camera-lock
-  encounters (3 waves), boss arena, HUD, pause, victory/game-over overlays,
-  in-place restart.
-- Combat: 3-hit ground combo, jump + air attack, hit-stop, restrained
-  shake, knockback/knockdown, brief post-hit invulnerability, attacker
-  tokens (max 2 simultaneous enemy attackers), telegraphed boss attacks
-  with punishable recovery.
-- Audio: procedurally synthesized Web Audio SFX + music loop (no external
-  audio files to license), starts on first user gesture, `M` mute.
+## Media workflow (as executed)
+- Kept: Guan Yu / spearman (soldier) / Yu Jin (boss) existing sprite sets.
+- New images (gpt-image-2): sword soldier, archer and brute masters;
+  fleet and flagship background panoramas.
+- New motion (grok-imagine-video-1.5 via the local file helper): idle /
+  walk / attack for the three new enemies, plus Guan Yu's throw — the M1
+  gate, with grip point + release tick measured into the manifest (see
+  `assets-source/guanyu/provenance-throw.json`). Two throw attempts were
+  generated; attempt 1 was used (attempt 2's weapon vanished mid-heave).
+- Shared pipeline per character: extract 12 fps → magenta chroma-key →
+  despill → one global scale/translation onto a 512px canvas, ground 472 →
+  contact-sheet inspection. Per-character `normalize.py` + `provenance.json`
+  record scale caps, strike fractions and honest quality gaps (e.g. the
+  brute is ~308px tall on canvas because his raised club caps the scale).
+- Moves without dedicated clips reuse validated art with code-driven
+  timing/FX (dash, air variants, Dragon Cleave sweep, boss charge/leap):
+  every action has a readable impact pose from its source clip, and the
+  gaps are listed in `docs/TEST_REPORT.md`.
 
 ## Verification
-`npm run build`, then Playwright script (`scripts/verify-browser.mjs`)
-drives the preview build: title → start → move/attack/jump/pause,
-damage checks, screenshots at each stage; screenshots are visually
-inspected. Results and limitations are reported in the PR — build success
-alone is not claimed as animation quality.
+`npm run build` + `node scripts/verify-browser.mjs` (47 browser checks,
+screenshots at two viewports) — details and remaining gaps in
+`docs/TEST_REPORT.md`.

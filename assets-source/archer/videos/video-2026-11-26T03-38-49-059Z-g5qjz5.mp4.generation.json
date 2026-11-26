@@ -1,0 +1,14 @@
+{
+  "provider": "Grok subscription",
+  "model": "grok-imagine-video-1.5",
+  "parameters": {
+    "prompt": "Same archer, locked camera, shoots one arrow to the right: raises the bow, draws an arrow with a visible aim hold, releases, then lowers back to ready stance. Side view, in place, constant scale, no camera motion, flat magenta background, entire bow always fully visible, minimal motion blur. The arrow itself may leave the frame; keep the archer and bow fully visible.",
+    "duration": 3,
+    "aspect_ratio": "1:1",
+    "resolution": "480p"
+  },
+  "referenceImage": "C:\\Users\\qiyu0\\.dsh\\state\\superagent\\work\\red-cliffs-ablaze-bcccf103ff9f\\assets-source\\archer\\master.png",
+  "path": "C:\\Users\\qiyu0\\.dsh\\state\\superagent\\work\\red-cliffs-ablaze-bcccf103ff9f\\assets-source\\archer\\videos\\video-2026-11-26T03-38-49-059Z-g5qjz5.mp4",
+  "duration": 3,
+  "createdAt": "2026-11-26T03:38:49.062Z"
+}

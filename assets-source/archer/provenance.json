@@ -1,0 +1,97 @@
+{
+ "character": "Wei (Cao Wei) archer / 弓兵, char id 'archer', facing RIGHT (game flips horizontally as needed). Attack = bow shot (raise, draw, aim hold, release).",
+ "skill": "dsh-superagent-game-asset-workflow was requested but returned 'unknown skill' from the skill tool; proceeded following the task instructions and the guanyu/soldier pipeline conventions directly",
+ "master": {
+  "model": "gpt-image-2 (image_generate, provider gpt, requested 1024x1024)",
+  "attempts": 1,
+  "prompt": "Detailed painted illustration, game sprite master, strict side view facing right: a Wei-dynasty Chinese archer (Three Kingdoms era), lighter lamellar armor over dark teal-blue cloth uniform, cloth head wrap, holding a recurved composite bow lowered at rest in his left hand, quiver of arrows on his back. Relaxed ready stance, feet planted apart. Whole character including bow occupies only about 65% of frame height, centered, GENEROUS empty margin on ALL sides especially front/top — nothing cropped. Flat pure solid magenta #ff00ff background, no shadow, no ground, no text, no scenery. Not pixel art, clean edges.",
+  "output": "assets-source/archer/master.png (1312x1312)",
+  "notes": "Generator returned 1199x1312 despite the 1024x1024 request (kept as master-raw.png); padded left/right with flat #ff00ff to a 1312x1312 square via PIL so the 1:1 video would not crop. Inspected with read_image: strict right-facing side view, bow lowered in left hand, back quiver, lamellar over teal-blue uniform, clean magenta (sampled 253,2,251), generous margins. A small 'Wei' character emblem is painted on the chest strap medallion - reads as insignia, not stray text."
+ },
+ "videos": {
+  "model": "grok-imagine-video-1.5 (via video-from-file.mjs, 480p, 1:1, imagePath=master.png)",
+  "idle": {
+   "attempts": 1,
+   "duration": 2,
+   "request": "assets-source/archer/video-request-idle.json",
+   "prompt": "Same archer, locked camera, full body idle breathing in place, bow held lowered and ready, subtle sway, no camera motion, no walking, flat magenta background, entire bow always fully visible.",
+   "file": "assets-source/archer/videos/idle-a1.mp4",
+   "verdict": "USED. Subtle rightward sway/drift over frames 1-12, then the torso slowly rotates toward the camera (frames 17-25); selection uses only frames 2-10 ping-pong, before the rotation. Feet stay at source y=494."
+  },
+  "walk": {
+   "attempts": 1,
+   "duration": 3,
+   "request": "assets-source/archer/video-request-walk.json",
+   "prompt": "Same archer, locked camera, walking in place to the right, side view, steady gait, bow carried ready, constant scale, no camera motion, flat magenta background, entire bow always fully visible.",
+   "file": "assets-source/archer/videos/walk-a1.mp4",
+   "verdict": "USED. Clean side-view gait, ~2 full two-step cycles in 37 frames @12fps; cycle frames 6-21 selected (frame 23 repeats frame 6's knee-up). Body floats up to ~10px (source) in knee-up phases - compensated with a +3px canvas nudge in normalize.py."
+  },
+  "attack": {
+   "attempts": 2,
+   "attempt1": {
+    "duration": 3,
+    "request": "assets-source/archer/video-request-attack.json",
+    "prompt": "Same archer, locked camera, shoots one arrow to the right: raises the bow, draws an arrow with a visible aim hold, releases, then lowers back to ready stance. Side view, in place, constant scale, no camera motion, flat magenta background, entire bow always fully visible, minimal motion blur. The arrow itself may leave the frame; keep the archer and bow fully visible.",
+    "file": "assets-source/archer/videos/attack-a1.mp4",
+    "verdict": "REJECTED: camera steadily zooms in - character grows, feet exit the bottom from ~frame 13, bow exits the top in mid frames, torso turns front-facing during the aim, and he draws twice. Breaks the shared scale/ground contract. Kept on disk (frames-attack-a1-*) for the record."
+   },
+   "attempt2": {
+    "duration": 3,
+    "request": "assets-source/archer/video-request-attack-a2.json",
+    "prompt": "Same archer, WIDE locked static shot, absolutely no zoom and no camera motion, character stays exactly the same size and position from first to last frame, head and feet and full bow always inside the frame with empty magenta margin on all sides. Strict side profile facing right the whole time, never turns toward the camera. He shoots one arrow to the right: raises the bow, draws with a visible aim hold, releases once, then lowers back to the exact starting ready stance. Feet planted in place, flat magenta background, minimal motion blur.",
+    "file": "assets-source/archer/videos/attack-a2.mp4",
+    "verdict": "USED. Constant scale, feet at source y=494 in all 37 frames, full bow visible throughout. One clean shot: raise f6-8, draw f9-15, aim hold f16-26, release at f27 (arrow streaks out of frame), follow-through f28, lower f31-34, exact starting stance held f36-37."
+   }
+  }
+ },
+ "processing": [
+  "asset-pipeline.py extract --fps 12 (544x544 frames) -> frames-{idle,walk}-a1-raw, frames-attack-{a1,a2}-raw",
+  "asset-pipeline.py remove-bg --method chroma --color ff00ff -> frames-*-keyed",
+  "Per-action contact sheets inspected with read_image for zoom/cropping, identity drift, bow integrity, magenta spill (inspection sheets deleted after use; final contact-sheet.png retained)",
+  "assets-source/archer/normalize.py: guanyu two-stage magenta despill, ONE scale 0.82 + ONE translation (dx=+16, dy=+67 canvas px) for all frames/actions, source ground y=494 -> canvas y=472, 512x512 transparent canvas; walk +3px vertical nudge only; no per-pose crop/resize",
+  "Combined final contact sheet over dark background with ground + origin lines: assets-source/archer/contact-sheet.png (viewed)"
+ ],
+ "frameSelection": {
+  "idle": {
+   "sourceDir": "frames-idle-a1-keyed",
+   "sourceFrames": [2, 4, 6, 8, 10, 8, 6, 4],
+   "count": 8,
+   "note": "ping-pong over the early sway segment; later frames rotate toward camera and are excluded"
+  },
+  "walk": {
+   "sourceDir": "frames-walk-a1-keyed",
+   "sourceFrames": [6, 8, 10, 12, 15, 17, 19, 21],
+   "count": 8,
+   "note": "one full two-step gait cycle: knee-up A, extend, stride, passing, knee-up B, extend, stride, passing"
+  },
+  "attack": {
+   "sourceDir": "frames-attack-a2-keyed",
+   "sourceFrames": [1, 6, 8, 9, 16, 24, 28, 31, 34, 36],
+   "count": 10,
+   "note": "rest, raise, bow up, nock/draw start, full draw, aim hold, release follow-through, lower x2, rest. Source frames 10-13 skipped (nocked arrow drawn impossibly long, exits right edge); frame 27 (the literal loose, arrow streak mid-frame) skipped in favor of 28 where the arrow has exited.",
+   "strikeIndex": 6,
+   "strikeFrac": 0.667,
+   "strikeNote": "strikeFrac = 6/(10-1). Output attack_6 (source f28) is the first post-release frame: bowstring forward, arrow already gone - spawn the game arrow here."
+  }
+ },
+ "output": {
+  "directory": "public/assets/frames/archer/",
+  "naming": "{idle,walk,attack}_N.png, N is 0-based (matches guanyu/loader convention)",
+  "manifest": {
+   "canvas": [512, 512],
+   "groundY": 472,
+   "originX": 227,
+   "actions": {"idle": 8, "walk": 8, "attack": 10},
+   "strikeFrac": {"attack": 0.667}
+  },
+  "canvasNotes": "Character is ~302px head-to-feet on canvas at scale 0.82 (the ~300px infantry target); nothing is cropped in any frame - raised bow tip tops out at canvas y=99, widest frame (full draw) spans x 145..389. originX=227 is the midpoint of idle_0's feet-band alpha extent (x 178..276). Feet bbox bottom is y=473 (last opaque pixel on the 472 ground line) in all idle/attack frames; walk varies 469-476 with gait bob."
+ },
+ "knownDefects": [
+  "At full draw (attack_4..attack_7) the torso opens partway toward the camera instead of staying in strict profile - natural archery form and the head/aim stay right-facing, but it is a slight view change vs idle/walk. Attempt 2 reduced but did not eliminate this.",
+  "The bowstring is heavily magenta-tinted in the 480p source; after chroma key + despill it survives only faintly (near-invisible in idle, thin in attack). The bow limbs themselves are solid and uncropped everywhere.",
+  "In walk frames 15/17/19 (walk_4..walk_6) the carried bow swings edge-on to the camera and reads small/short for those phases; it does not bend or detach, and it is back in profile for the rest of the cycle.",
+  "Walk body bob: feet sit up to ~4px above or below the ground line in some phases even after the +3px compensation nudge (source gait floats). Not noticeable at game size.",
+  "Idle sway includes ~13px (canvas) of horizontal drift out-and-back (ping-pong), so the body slides slightly rather than purely breathing; feet stay planted on the line.",
+  "Mild 480p video softness vs the master still, consistent across all actions (same pipeline and scale). No identity drift: face, head wrap, armor, quiver and colors are stable in every selected frame; no residual magenta fringe visible on dark-background inspection after despill."
+ ]
+}

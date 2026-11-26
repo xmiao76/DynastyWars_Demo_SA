@@ -1,0 +1,14 @@
+{
+  "provider": "Grok subscription",
+  "model": "grok-imagine-video-1.5",
+  "parameters": {
+    "prompt": "Same strongman, locked camera, full body idle breathing heavily in place, club held ready, subtle sway, no camera motion, no walking, flat magenta background, entire club always fully visible.",
+    "duration": 2,
+    "aspect_ratio": "1:1",
+    "resolution": "480p"
+  },
+  "referenceImage": "C:\\Users\\qiyu0\\.dsh\\state\\superagent\\work\\red-cliffs-ablaze-bcccf103ff9f\\assets-source\\brute\\master.png",
+  "path": "C:\\Users\\qiyu0\\.dsh\\state\\superagent\\work\\red-cliffs-ablaze-bcccf103ff9f\\assets-source\\brute\\videos\\video-2026-11-26T03-39-01-112Z-1l7k73.mp4",
+  "duration": 2,
+  "createdAt": "2026-11-26T03:39:01.114Z"
+}

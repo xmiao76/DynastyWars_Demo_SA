@@ -1,0 +1,8 @@
+{
+  "resolution": "480p",
+  "imagePath": "C:/Users/qiyu0/.dsh/state/superagent/work/red-cliffs-ablaze-bcccf103ff9f/assets-source/archer/master.png",
+  "prompt": "Same archer, locked camera, full body idle breathing in place, bow held lowered and ready, subtle sway, no camera motion, no walking, flat magenta background, entire bow always fully visible.",
+  "outputDir": "C:/Users/qiyu0/.dsh/state/superagent/work/red-cliffs-ablaze-bcccf103ff9f/assets-source/archer/videos",
+  "aspect_ratio": "1:1",
+  "duration": 2
+}

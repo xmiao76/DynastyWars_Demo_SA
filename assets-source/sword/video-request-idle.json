@@ -1,0 +1,8 @@
+{
+  "resolution": "480p",
+  "imagePath": "C:/Users/qiyu0/.dsh/state/superagent/work/red-cliffs-ablaze-bcccf103ff9f/assets-source/sword/master.png",
+  "prompt": "Same soldier, locked camera, full body idle breathing in place, subtle sway, sword held ready, no camera motion, no walking, flat magenta background, entire sword always fully visible.",
+  "outputDir": "C:/Users/qiyu0/.dsh/state/superagent/work/red-cliffs-ablaze-bcccf103ff9f/assets-source/sword/videos",
+  "aspect_ratio": "1:1",
+  "duration": 2
+}

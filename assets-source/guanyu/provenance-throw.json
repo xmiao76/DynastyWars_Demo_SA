@@ -1,0 +1,36 @@
+{
+  "action": "Guan Yu grab-and-throw (new for Red Cliffs Ablaze, issue #3 M1 gate)",
+  "date": "2026-11-25",
+  "reference": "assets-source/guanyu/master.png (existing approved master, unchanged)",
+  "video": {
+    "provider": "Grok subscription",
+    "model": "grok-imagine-video-1.5",
+    "helper": "node C:/Users/qiyu0/AppData/Local/DeepSeekSuperagent/game-tools/video-from-file.mjs <request.json>",
+    "settings": { "aspect_ratio": "1:1", "resolution": "480p", "durationSec": 3 },
+    "attempts": [
+      {
+        "n": 1,
+        "requestFile": "video-request-throw.json",
+        "videoDir": "video-throw/",
+        "result": "USED. Clear readable throw: frames 13-19 extended-arm hold at arm's length (grip), 21-25 haul-in, 29-31 heave/release, 33-35 recovery to ready stance. Identity/beard/costume stable, camera locked, feet grounded, full body always visible.",
+        "caveat": "Per the prompt's 'plants his guandao butt-down' the model lay the guandao on the ground during the grapple; he re-grips it in recovery. Kept honestly (reads as setting the weapon down to seize the soldier) rather than painting it out."
+      },
+      {
+        "n": 2,
+        "requestFile": "video-request-throw-a2.json",
+        "videoDir": "video-throw-a2/",
+        "result": "REJECTED. Keeps the guandao in hand as asked, but the hold phase is just the ready stance (no readable grip) and the weapon vanishes during the heave (frames 27-31), so synchronization with a held victim would read worse."
+      }
+    ]
+  },
+  "processing": {
+    "extract": "asset-pipeline.py extract --fps 12 -> frames-throw-raw/ (37 frames, 544x544)",
+    "key": "asset-pipeline.py remove-bg --method chroma --color ff00ff -> frames-throw-keyed/",
+    "finalize": "assets-source/guanyu/finalize-throw.py — reuses the shipped guanyu transform (SCALE 1.02, ground 472); dx recovered from shipped attack_0 vs the identical clip first frame (dx=-11.9, dy=-9.4). Same two-stage magenta despill as normalize.py.",
+    "selectedSourceFrames": [13, 17, 21, 23, 25, 29, 31, 33, 35],
+    "output": "public/assets/frames/guanyu/throw_0..8.png; manifest actions.throw=9, strikeFrac.throw=0.625 (release tick = output index 5, source frame 29), grip={dx:160, dy:-247} canvas px from (originX, groundY) measured at the extended hand of the hold frame",
+    "contactSheets": ["throw-contact-raw.png", "throw-a2-contact-raw.png", "throw-contact-sheet.png"]
+  },
+  "gameSync": "The victim is a separately placeable sprite: while grabbed it is pinned to the manifest grip point in front of Guan Yu; the throw animation is time-scaled to 560ms and the victim is released exactly at strikeFrac.throw with fixed velocity, then becomes a physics body that damages other enemies once each. Grab hold still uses throw_0 (the extended-arm pose).",
+  "qualityNotes": "Beard, hands, grip, costume and foot contact read well at gameplay scale on the dark fleet decks. The ground-laid guandao is visible as a thin line at the feet during hold frames (see caveat). No magenta fringe visible after despill on dark backgrounds. Attempt count: 2 of max 3 used."
+}
