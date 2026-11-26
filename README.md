@@ -1,8 +1,8 @@
 # Red Cliffs Ablaze · 赤壁烽火 — Guan Yu / 关羽
 
-> **Demo project** — built to experiment with loop engineering and the
-> DeepSeek superAgent. It is a technology/process demo, not a commercial
-> release.
+> **Demo project** — an experiment with loop engineering. The game was
+> developed by the Muse-Wonder-Full-1.0-contributor model and DeepSeek
+> superAgent.
 >
 > **▶ Play the live demo: https://dynasty-wars-demo-sa.pages.dev/**
 
