@@ -1,5 +1,11 @@
 # Red Cliffs Ablaze · 赤壁烽火 — Guan Yu / 关羽
 
+> **Demo project** — built to experiment with loop engineering and the
+> DeepSeek superAgent. It is a technology/process demo, not a commercial
+> release.
+>
+> **▶ Play the live demo: https://dynasty-wars-demo-sa.pages.dev/**
+
 A single-player, side-scrolling browser beat-'em-up inspired by
 *Warriors of Fate / Tenchi wo Kurau II* (吞食天地2：赤壁之战). Play Guan Yu
 across the burning, chained Wei fleet at Red Cliffs: five combat decks,
@@ -59,7 +65,7 @@ npm run preview    # http://127.0.0.1:4173
 
 ## Deploy to Cloudflare Pages
 
-Live: **https://dynasty-wars-demo-sa.pages.dev/** (Cloudflare Pages project
+Live demo: **https://dynasty-wars-demo-sa.pages.dev/** (Cloudflare Pages project
 `dynasty-wars-demo-sa`, Direct Upload — see `wrangler.jsonc`).
 
 ```bash
